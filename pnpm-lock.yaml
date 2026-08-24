@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       componentes-kit:
-        specifier: file:../componentes-kit
-        version: file:../componentes-kit(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: link:../componentes-kit
+        version: link:../componentes-kit
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -527,12 +527,6 @@ packages:
   commander@4.1.1:
     resolution: {integrity: sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==}
     engines: {node: '>= 6'}
-
-  componentes-kit@file:../componentes-kit:
-    resolution: {directory: ../componentes-kit, type: directory}
-    peerDependencies:
-      react: ^18.3.1
-      react-dom: ^18.3.1
 
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
@@ -1298,11 +1292,6 @@ snapshots:
       fsevents: 2.3.3
 
   commander@4.1.1: {}
-
-  componentes-kit@file:../componentes-kit(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
-    dependencies:
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
 
   convert-source-map@2.0.0: {}
 
