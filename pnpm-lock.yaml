@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@iagokcruz/componentes-kit':
-        specifier: ^0.1.0
-        version: 0.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.1.1
+        version: 0.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -270,8 +270,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@iagokcruz/componentes-kit@0.1.0':
-    resolution: {integrity: sha512-UI5yx4clBsE5mAUh/bcUYpuHBhPePnkf3wh48Jlx8UeMyR4ANFgU7Y7P40SBxTOAs5h05hlOTknXzKtdnJKVuQ==}
+  '@iagokcruz/componentes-kit@0.1.1':
+    resolution: {integrity: sha512-m6BpJ2/DPUwTxBtdb/YbsgNqbaZbmR1RoYhZ3HAedEGgUV02Nvr34iZveNYqBSlU0f4Ez4orqtLS5mQwZZv97A==}
     peerDependencies:
       react: ^18.3.1
       react-dom: ^18.3.1
@@ -1090,7 +1090,7 @@ snapshots:
   '@esbuild/win32-x64@0.21.5':
     optional: true
 
-  '@iagokcruz/componentes-kit@0.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@iagokcruz/componentes-kit@0.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
