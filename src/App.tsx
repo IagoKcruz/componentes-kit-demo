@@ -135,9 +135,9 @@ export function App() {
         }
         footerFixed={footerFixed}
       >
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           <div className="mb-4 flex items-center justify-between">
-            <h1 className="text-xl font-semibold">{PAGE_LABELS[page]}</h1>
+            <h1 className="text-xl font-semibold sm:text-2xl">{PAGE_LABELS[page]}</h1>
             <SettingsComponent />
           </div>
 
