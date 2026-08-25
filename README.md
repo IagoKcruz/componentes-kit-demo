@@ -2,6 +2,8 @@
 
 Projeto de exemplo que consome o pacote [`@iagokcruz/componentes-kit`](https://www.npmjs.com/package/@iagokcruz/componentes-kit) (publicado no npm) — serve pra ver os componentes funcionando de verdade numa tela antes de usá-los em outro projeto.
 
+🔗 **Demo no ar:** [componentes-kit-demo.vercel.app](https://componentes-kit-demo.vercel.app/)
+
 ## Como rodar
 
 ```bash
@@ -13,12 +15,14 @@ Abre em `http://localhost:5173`.
 
 ## O que a tela mostra
 
-`src/App.tsx` monta uma tela de "Estoque" usando o `Layout` (com `Menu` lateral colapsável e
-`Footer`) e o `DataGrid`:
-- **Menu**: navegação lateral (Estoque/Pedidos/Clientes/Relatórios), colapsa pra uma barrinha
-  com o botão de abrir.
-- **Configurações** (ícone de engrenagem): aparência (claro/escuro/sistema) e customização de
-  cores ao vivo.
+`src/App.tsx` monta uma tela de exemplo usando a `Leiaute` (com `Menu` lateral colapsável e
+`Rodape`) e a `Grade`:
+- **Menu**: navegação lateral (Página 1/2/3, nomes genéricos de propósito — é só um exemplo),
+  colapsa pra uma barrinha com o botão de abrir.
+- **Configurações** (ícone de engrenagem): aparência (claro/escuro/sistema) e paletas de cor
+  prontas ao vivo.
+- Na Página 1: um catálogo com `CaixaTexto`, `EntradaNumerica`, `EntradaMascara` e `CaixaSelecao`
+  funcionando, seguido da `Grade`.
 - **Incluir**: abre o formulário vazio (popup ou inline, conforme o seletor "Modo de edição" no
   topo) e só cria o produto ao confirmar.
 - **Editar** / **Excluir** / **Duplicar**: ações por linha na grid.
