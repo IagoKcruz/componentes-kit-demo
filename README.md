@@ -1,17 +1,10 @@
 # componentes-kit-demo
 
-Projeto de exemplo, separado, que consome o pacote [`componentes-kit`](../componentes-kit) localmente — serve pra ver o `DataGrid` funcionando de verdade numa tela antes de usá-lo em outro projeto.
+Projeto de exemplo que consome o pacote [`@iagokcruz/componentes-kit`](https://www.npmjs.com/package/@iagokcruz/componentes-kit) (publicado no npm) — serve pra ver os componentes funcionando de verdade numa tela antes de usá-los em outro projeto.
 
 ## Como rodar
 
-Precisa que `componentes-kit` esteja buildado (o `dist/` dele é o que este projeto consome via `file:../componentes-kit`):
-
 ```bash
-cd ../componentes-kit
-pnpm install
-pnpm run build
-
-cd ../componentes-kit-demo
 pnpm install
 pnpm run dev
 ```
@@ -20,10 +13,24 @@ Abre em `http://localhost:5173`.
 
 ## O que a tela mostra
 
-`src/App.tsx` é uma tela de "Estoque" usando `DataGrid`:
-- **Incluir**: abre o formulário vazio (popup ou inline, conforme o seletor "Modo de edição" no topo) e só cria o produto ao confirmar.
-- **Editar**: abre o registro existente pra edição.
-- **Excluir**: remove o produto direto.
-- **Duplicar**: ação customizada por linha, criada só pra essa tela.
+`src/App.tsx` monta uma tela de "Estoque" usando o `Layout` (com `Menu` lateral colapsável e
+`Footer`) e o `DataGrid`:
+- **Menu**: navegação lateral (Estoque/Pedidos/Clientes/Relatórios), colapsa pra uma barrinha
+  com o botão de abrir.
+- **Configurações** (ícone de engrenagem): aparência (claro/escuro/sistema) e customização de
+  cores ao vivo.
+- **Incluir**: abre o formulário vazio (popup ou inline, conforme o seletor "Modo de edição" no
+  topo) e só cria o produto ao confirmar.
+- **Editar** / **Excluir** / **Duplicar**: ações por linha na grid.
+- **Rodapé fixo**: alterna entre o rodapé sempre visível (com scroll só no conteúdo) e o rodapé
+  normal (rola junto com a página).
 
-Sempre que mexer no `componentes-kit`, rode `pnpm run build` lá de novo — o Vite deste projeto detecta a mudança via hot reload (às vezes é preciso `pnpm run dev -- --force` se o cache de dependências do Vite ficar desatualizado).
+## Deploy
+
+O projeto está pronto pra deploy estático (Vercel, Netlify etc.) — não usa nenhuma variável de
+ambiente nem link local, é só instalar e buildar (`pnpm build`, saída em `dist/`).
+
+## Branches
+
+- `master`: o que está publicado/no ar.
+- `Dev`: onde as mudanças acontecem. `master` só é atualizada quando um novo release é decidido.
