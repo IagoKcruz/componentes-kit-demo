@@ -8,9 +8,9 @@ importers:
 
   .:
     dependencies:
-      componentes-kit:
-        specifier: link:../componentes-kit
-        version: link:../componentes-kit
+      '@iagokcruz/componentes-kit':
+        specifier: ^0.1.0
+        version: 0.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -269,6 +269,12 @@ packages:
     engines: {node: '>=12'}
     cpu: [x64]
     os: [win32]
+
+  '@iagokcruz/componentes-kit@0.1.0':
+    resolution: {integrity: sha512-UI5yx4clBsE5mAUh/bcUYpuHBhPePnkf3wh48Jlx8UeMyR4ANFgU7Y7P40SBxTOAs5h05hlOTknXzKtdnJKVuQ==}
+    peerDependencies:
+      react: ^18.3.1
+      react-dom: ^18.3.1
 
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
@@ -1083,6 +1089,11 @@ snapshots:
 
   '@esbuild/win32-x64@0.21.5':
     optional: true
+
+  '@iagokcruz/componentes-kit@0.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:

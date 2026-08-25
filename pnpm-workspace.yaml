@@ -1,4 +1,6 @@
 allowBuilds:
   esbuild: true
+minimumReleaseAgeExclude:
+  - '@iagokcruz/componentes-kit@0.1.0'
 onlyBuiltDependencies:
   - esbuild

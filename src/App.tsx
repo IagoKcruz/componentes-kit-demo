@@ -8,7 +8,7 @@ import {
   ThemeProvider,
   type Column,
   type EditMode,
-} from "componentes-kit";
+} from "@iagokcruz/componentes-kit";
 import { fakeApiCall } from "./fakeApi";
 
 function iconProps() {
