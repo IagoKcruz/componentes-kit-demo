@@ -25,7 +25,7 @@ function iconProps() {
   };
 }
 
-function EstoqueIcon() {
+function Pagina1Icon() {
   return (
     <svg {...iconProps()}>
       <path d="m21 8-9-5-9 5 9 5 9-5Z" />
@@ -34,7 +34,7 @@ function EstoqueIcon() {
   );
 }
 
-function PedidosIcon() {
+function Pagina2Icon() {
   return (
     <svg {...iconProps()}>
       <path d="M9 11h6M9 15h6M9 7h6" />
@@ -43,16 +43,7 @@ function PedidosIcon() {
   );
 }
 
-function ClientesIcon() {
-  return (
-    <svg {...iconProps()}>
-      <circle cx="9" cy="8" r="3" />
-      <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 8a3 3 0 1 1 3.5 2.96M17 14.1c1.7.4 3 1.9 3 3.9" />
-    </svg>
-  );
-}
-
-function RelatoriosIcon() {
+function Pagina3Icon() {
   return (
     <svg {...iconProps()}>
       <path d="M3 3v18h18" />
@@ -87,17 +78,25 @@ const columns: Column<Produto>[] = [
   { key: "status", header: "Status" },
 ];
 
-const menuItems = [
-  { id: "estoque", label: "Estoque", href: "#", icon: <EstoqueIcon /> },
-  { id: "pedidos", label: "Pedidos", href: "#", icon: <PedidosIcon /> },
-  { id: "clientes", label: "Clientes", href: "#", icon: <ClientesIcon /> },
-  { id: "relatorios", label: "Relatórios", href: "#", icon: <RelatoriosIcon /> },
-];
+type PageId = "pagina-1" | "pagina-2" | "pagina-3";
+
+const PAGE_LABELS: Record<PageId, string> = {
+  "pagina-1": "Página 1",
+  "pagina-2": "Página 2",
+  "pagina-3": "Página 3",
+};
 
 export function App() {
+  const [page, setPage] = useState<PageId>("pagina-1");
   const [produtos, setProdutos] = useState<Produto[]>(produtosIniciais);
   const [editMode, setEditMode] = useState<EditMode>("popup");
   const [footerFixed, setFooterFixed] = useState(false);
+
+  const menuItems = [
+    { id: "pagina-1", label: "Página 1", href: "#", icon: <Pagina1Icon />, onClick: () => setPage("pagina-1") },
+    { id: "pagina-2", label: "Página 2", href: "#", icon: <Pagina2Icon />, onClick: () => setPage("pagina-2") },
+    { id: "pagina-3", label: "Página 3", href: "#", icon: <Pagina3Icon />, onClick: () => setPage("pagina-3") },
+  ];
 
   function handleAdd(): Produto {
     const nextId = produtos.length > 0 ? Math.max(...produtos.map((p) => p.id)) + 1 : 1;
@@ -138,49 +137,69 @@ export function App() {
       >
         <div className="p-6">
           <div className="mb-4 flex items-center justify-between">
-            <h1 className="text-xl font-semibold">Estoque</h1>
+            <h1 className="text-xl font-semibold">{PAGE_LABELS[page]}</h1>
             <SettingsComponent />
           </div>
 
-          <div className="mb-4 flex flex-wrap items-center gap-4 text-sm text-[var(--ck-color-text-muted)]">
-            <label className="flex items-center gap-2">
-              Modo de edição:
-              <select
-                className="rounded border border-[var(--ck-color-border)] bg-[var(--ck-color-bg)] px-2 py-1 text-sm"
-                value={editMode}
-                onChange={(event) => setEditMode(event.target.value as EditMode)}
-              >
-                <option value="popup">Popup</option>
-                <option value="inline">Inline</option>
-              </select>
-            </label>
+          {page === "pagina-1" && (
+            <>
+              <div className="mb-4 flex flex-wrap items-center gap-4 text-sm text-[var(--ck-color-text-muted)]">
+                <label className="flex items-center gap-2">
+                  Modo de edição:
+                  <select
+                    className="rounded border border-[var(--ck-color-border)] bg-[var(--ck-color-bg)] px-2 py-1 text-sm"
+                    value={editMode}
+                    onChange={(event) => setEditMode(event.target.value as EditMode)}
+                  >
+                    <option value="popup">Popup</option>
+                    <option value="inline">Inline</option>
+                  </select>
+                </label>
 
-            <label className="flex items-center gap-2">
-              Rodapé fixo:
-              <select
-                className="rounded border border-[var(--ck-color-border)] bg-[var(--ck-color-bg)] px-2 py-1 text-sm"
-                value={footerFixed ? "sim" : "nao"}
-                onChange={(event) => setFooterFixed(event.target.value === "sim")}
-              >
-                <option value="nao">Não</option>
-                <option value="sim">Sim</option>
-              </select>
-            </label>
-          </div>
+                <label className="flex items-center gap-2">
+                  Rodapé fixo:
+                  <select
+                    className="rounded border border-[var(--ck-color-border)] bg-[var(--ck-color-bg)] px-2 py-1 text-sm"
+                    value={footerFixed ? "sim" : "nao"}
+                    onChange={(event) => setFooterFixed(event.target.value === "sim")}
+                  >
+                    <option value="nao">Não</option>
+                    <option value="sim">Sim</option>
+                  </select>
+                </label>
+              </div>
 
-          <DataGrid
-            columns={columns}
-            data={produtos}
-            getRowId={(produto) => produto.id}
-            onAdd={handleAdd}
-            onCreate={handleCreate}
-            onRemove={handleRemove}
-            onSave={handleSave}
-            editMode={editMode}
-            rowActions={(produto) => [
-              { id: "duplicar", label: "Duplicar", onClick: () => handleDuplicar(produto) },
-            ]}
-          />
+              <DataGrid
+                columns={columns}
+                data={produtos}
+                getRowId={(produto) => produto.id}
+                onAdd={handleAdd}
+                onCreate={handleCreate}
+                onRemove={handleRemove}
+                onSave={handleSave}
+                editMode={editMode}
+                rowActions={(produto) => [
+                  { id: "duplicar", label: "Duplicar", onClick: () => handleDuplicar(produto) },
+                ]}
+              />
+            </>
+          )}
+
+          {page === "pagina-2" && (
+            <p className="text-sm text-[var(--ck-color-text-muted)]">
+              Conteúdo de exemplo da Página 2 — troque isso pelo conteúdo real do seu projeto. O
+              menu, o rodapé, as configurações e o layout ao redor continuam os mesmos em
+              qualquer página.
+            </p>
+          )}
+
+          {page === "pagina-3" && (
+            <p className="text-sm text-[var(--ck-color-text-muted)]">
+              Conteúdo de exemplo da Página 3 — troque isso pelo conteúdo real do seu projeto. O
+              menu, o rodapé, as configurações e o layout ao redor continuam os mesmos em
+              qualquer página.
+            </p>
+          )}
         </div>
       </Layout>
     </ThemeProvider>
