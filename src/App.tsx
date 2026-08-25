@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import {
   DataGrid,
+  SettingsComponent,
   ThemeProvider,
   type Column,
   type DataGridHandle,
@@ -66,7 +67,10 @@ export function App() {
   return (
     <ThemeProvider mode={mode === "system" ? undefined : mode} overrides={selectedTheme?.overrides}>
       <main className="mx-auto mt-10 max-w-2xl px-4 pb-16 text-[var(--ck-color-text)]">
-        <h1 className="mb-4 text-xl font-semibold">Estoque</h1>
+        <div className="mb-4 flex items-center justify-between">
+          <h1 className="text-xl font-semibold">Estoque</h1>
+          <SettingsComponent />
+        </div>
 
         <label className="mb-3 flex items-center gap-2 text-sm text-[var(--ck-color-text-muted)]">
           Modo de edição:
