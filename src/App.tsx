@@ -1,18 +1,18 @@
 import { useState } from "react";
 import type { ReactNode } from "react";
 import {
-  CaixaSelecao,
-  Grade,
-  Rodape,
-  Leiaute,
-  EntradaMascara,
+  ComboBox,
+  DataGrid,
+  Footer,
+  Layout,
+  MaskedInput,
   Menu,
-  EntradaNumerica,
-  Configuracoes,
-  CaixaTexto,
-  PainelNotificacoes,
-  TipoNotificacao,
-  ProvedorTema,
+  NumericInput,
+  SettingsComponent,
+  TextBox,
+  ToastContainer,
+  ToastType,
+  ThemeProvider,
   mostrarNotificacao,
   type Coluna,
   type ModoEdicao,
@@ -118,10 +118,10 @@ function ComponentesShowcase() {
   const [combo, setCombo] = useState(OPCOES_CATEGORIA[0]!.valor);
 
   const linhas: { nome: string; elemento: ReactNode }[] = [
-    { nome: "CaixaTexto", elemento: <CaixaTexto valor={texto} aoAlterar={setTexto} dica="Digite algo" /> },
-    { nome: "EntradaNumerica", elemento: <EntradaNumerica valor={numero} aoAlterar={setNumero} minimo={0} /> },
-    { nome: "EntradaMascara (CPF)", elemento: <EntradaMascara valor={mascara} aoAlterar={setMascara} mascara="999.999.999-99" dica="000.000.000-00" /> },
-    { nome: "CaixaSelecao", elemento: <CaixaSelecao valor={combo} aoAlterar={setCombo} opcoes={OPCOES_CATEGORIA} /> },
+    { nome: "TextBox", elemento: <TextBox valor={texto} aoAlterar={setTexto} dica="Digite algo" /> },
+    { nome: "NumericInput", elemento: <NumericInput valor={numero} aoAlterar={setNumero} minimo={0} /> },
+    { nome: "MaskedInput (CPF)", elemento: <MaskedInput valor={mascara} aoAlterar={setMascara} mascara="999.999.999-99" dica="000.000.000-00" /> },
+    { nome: "ComboBox", elemento: <ComboBox valor={combo} aoAlterar={setCombo} opcoes={OPCOES_CATEGORIA} /> },
   ];
 
   return (
@@ -162,42 +162,42 @@ export function App() {
   async function criarProduto(novoProduto: Produto) {
     await fakeApiCall(novoProduto);
     setProdutos((atual) => [...atual, novoProduto]);
-    mostrarNotificacao(TipoNotificacao.Sucesso, `"${novoProduto.nome}" criado com sucesso.`);
+    mostrarNotificacao(ToastType.Sucesso, `"${novoProduto.nome}" criado com sucesso.`);
   }
 
   async function removerProduto(produto: Produto) {
     await fakeApiCall(produto);
     setProdutos((atual) => atual.filter((item) => item.id !== produto.id));
-    mostrarNotificacao(TipoNotificacao.Informacao, `"${produto.nome}" excluído.`);
+    mostrarNotificacao(ToastType.Informacao, `"${produto.nome}" excluído.`);
   }
 
   async function salvarProduto(produtoEditado: Produto) {
     await fakeApiCall(produtoEditado);
     setProdutos((atual) => atual.map((item) => (item.id === produtoEditado.id ? produtoEditado : item)));
-    mostrarNotificacao(TipoNotificacao.Sucesso, `"${produtoEditado.nome}" atualizado com sucesso.`);
+    mostrarNotificacao(ToastType.Sucesso, `"${produtoEditado.nome}" atualizado com sucesso.`);
   }
 
   function duplicarProduto(produto: Produto) {
     const proximoId = Math.max(...produtos.map((p) => p.id)) + 1;
     setProdutos((atual) => [...atual, { ...produto, id: proximoId, nome: `${produto.nome} (cópia)` }]);
-    mostrarNotificacao(TipoNotificacao.Informacao, `"${produto.nome}" duplicado.`);
+    mostrarNotificacao(ToastType.Informacao, `"${produto.nome}" duplicado.`);
   }
 
   return (
-    <ProvedorTema>
-      <Leiaute
+    <ThemeProvider>
+      <Layout
         menu={<Menu itens={itensMenu} />}
         rodape={
-          <Rodape fixo={rodapeFixo}>
+          <Footer fixo={rodapeFixo}>
             <span>componentes-kit — demo</span>
-          </Rodape>
+          </Footer>
         }
         rodapeFixo={rodapeFixo}
       >
         <div className="p-4 sm:p-6">
           <div className="mb-4 flex items-center justify-between">
             <h1 className="text-xl font-semibold sm:text-2xl">{ROTULOS_PAGINA[pagina]}</h1>
-            <Configuracoes />
+            <SettingsComponent />
           </div>
 
           {pagina === "pagina-1" && (
@@ -230,7 +230,7 @@ export function App() {
                 </label>
               </div>
 
-              <Grade
+              <DataGrid
                 colunas={colunas}
                 dados={produtos}
                 obterIdLinha={(produto) => produto.id}
@@ -262,9 +262,9 @@ export function App() {
             </p>
           )}
         </div>
-      </Leiaute>
+      </Layout>
 
-      <PainelNotificacoes />
-    </ProvedorTema>
+      <ToastContainer />
+    </ThemeProvider>
   );
 }

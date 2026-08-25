@@ -4,6 +4,8 @@ Projeto de exemplo que consome o pacote [`@iagokcruz/componentes-kit`](https://w
 
 🔗 **Demo no ar:** [componentes-kit-demo.vercel.app](https://componentes-kit-demo.vercel.app/)
 
+📖 **Guia completo de uso do kit:** [README2.0.md](./README2.0.md)
+
 ## Como rodar
 
 ```bash
@@ -15,14 +17,14 @@ Abre em `http://localhost:5173`.
 
 ## O que a tela mostra
 
-`src/App.tsx` monta uma tela de exemplo usando a `Leiaute` (com `Menu` lateral colapsável e
-`Rodape`) e a `Grade`:
+`src/App.tsx` monta uma tela de exemplo usando o `Layout` (com `Menu` lateral colapsável e
+`Footer`) e o `DataGrid`:
 - **Menu**: navegação lateral (Página 1/2/3, nomes genéricos de propósito — é só um exemplo),
   colapsa pra uma barrinha com o botão de abrir.
-- **Configurações** (ícone de engrenagem): aparência (claro/escuro/sistema) e paletas de cor
-  prontas ao vivo.
-- Na Página 1: um catálogo com `CaixaTexto`, `EntradaNumerica`, `EntradaMascara` e `CaixaSelecao`
-  funcionando, seguido da `Grade`.
+- **Configurações** (ícone de engrenagem, `SettingsComponent`): aparência (claro/escuro/sistema)
+  e paletas de cor prontas ao vivo.
+- Na Página 1: um catálogo com `TextBox`, `NumericInput`, `MaskedInput` e `ComboBox`
+  funcionando, seguido do `DataGrid`.
 - **Incluir**: abre o formulário vazio (popup ou inline, conforme o seletor "Modo de edição" no
   topo) e só cria o produto ao confirmar.
 - **Editar** / **Excluir** / **Duplicar**: ações por linha na grid.
