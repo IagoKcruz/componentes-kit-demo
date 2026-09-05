@@ -24,7 +24,10 @@ export function ProductsPage({ rodapeFixo, aoAlterarRodapeFixo }: ProductsPagePr
           <select
             className="rounded border border-[var(--ck-cor-borda)] bg-[var(--ck-cor-fundo)] px-2 py-1 text-sm"
             value={modoEdicao}
-            onChange={(event) => setModoEdicao(event.target.value as ModoEdicao)}
+            onChange={(event) => {
+              const value = event.target.value;
+              if (value === "popup" || value === "inline") setModoEdicao(value);
+            }}
           >
             <option value="popup">Popup</option>
             <option value="inline">Inline</option>

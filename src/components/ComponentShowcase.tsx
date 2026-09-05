@@ -8,7 +8,7 @@ export function ComponentShowcase() {
   const [text, setText] = useState("");
   const [number, setNumber] = useState(42);
   const [masked, setMasked] = useState("");
-  const [combo, setCombo] = useState(CATEGORY_OPTIONS[0]!.valor);
+  const [combo, setCombo] = useState(CATEGORY_OPTIONS[0]?.valor ?? "");
 
   const rows: { name: string; element: ReactNode }[] = [
     { name: "TextBox", element: <TextBox valor={text} aoAlterar={setText} dica="Digite algo" /> },
