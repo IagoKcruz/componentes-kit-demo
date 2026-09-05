@@ -9,7 +9,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@iagokcruz/componentes-kit": "^1.0.0",
+    "@iagokcruz/componentes-kit": "^1.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

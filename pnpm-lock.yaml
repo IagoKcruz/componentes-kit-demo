@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@iagokcruz/componentes-kit':
-        specifier: ^1.0.0
-        version: 1.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^1.2.0
+        version: 1.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -359,8 +359,8 @@ packages:
       '@noble/hashes':
         optional: true
 
-  '@iagokcruz/componentes-kit@1.0.0':
-    resolution: {integrity: sha512-m+5rqFn9pNQLwYc3mzT8dfQyeyRV+Dhk1bQCFCzsuc1WgxSIco9WgeZK9h9O+FkMYKq/+3TB1X9jRhs/7Kfuxw==}
+  '@iagokcruz/componentes-kit@1.2.0':
+    resolution: {integrity: sha512-nyspkD5LAEwGl5BsU4CijuvyI7VfawIM0DFF54y92P3SsfUREhXAEiqCDubER/tdgWdezMjz/AoEBETz1u6vvA==}
     peerDependencies:
       react: ^18.3.1
       react-dom: ^18.3.1
@@ -1763,7 +1763,7 @@ snapshots:
 
   '@exodus/bytes@1.15.1': {}
 
-  '@iagokcruz/componentes-kit@1.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@iagokcruz/componentes-kit@1.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
