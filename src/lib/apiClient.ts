@@ -19,7 +19,13 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
 
-  const res = await fetch(`${BASE_URL}${path}`, { ...options, headers });
+  let res: Response;
+  try {
+    res = await fetch(`${BASE_URL}${path}`, { ...options, headers });
+  } catch {
+    window.dispatchEvent(new CustomEvent("api:network-error"));
+    throw new Error("Não foi possível conectar ao servidor. Verifique se a API está no ar.");
+  }
 
   if (!res.ok) {
     if (res.status === 401) {
