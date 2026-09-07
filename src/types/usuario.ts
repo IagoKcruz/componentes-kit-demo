@@ -29,5 +29,6 @@ export function mapApiParaUsuario(api: ApiUsuario): Usuario {
     cpf: api.cpf,
     ativo: api.ativo,
     tipo: api.tipos[0] ?? "usuario",
+    senha: "",
   };
 }
