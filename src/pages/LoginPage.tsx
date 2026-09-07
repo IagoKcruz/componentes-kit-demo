@@ -1,5 +1,4 @@
 import { useState, type FormEvent } from "react";
-import { SettingsComponent } from "@iagokcruz/componentes-kit";
 
 interface Props {
   aoLogar: (email: string, senha: string) => Promise<void>;
@@ -16,11 +15,7 @@ export function LoginPage({ aoLogar, carregando }: Props) {
   }
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center bg-[var(--ck-cor-fundo-pagina,#f9fafb)] p-4">
-      <div className="absolute right-4 top-4">
-        <SettingsComponent />
-      </div>
-
+    <div className="flex justify-center pt-12">
       <div className="w-full max-w-sm rounded-lg border border-[var(--ck-cor-borda)] bg-[var(--ck-cor-fundo)] p-8 shadow-sm">
         <h1 className="mb-1 text-xl font-semibold">Entrar</h1>
         <p className="mb-6 text-sm text-[var(--ck-cor-texto-suave)]">componentes-kit — demo</p>
