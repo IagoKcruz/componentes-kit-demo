@@ -22,6 +22,10 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, { ...options, headers });
 
   if (!res.ok) {
+    if (res.status === 401) {
+      limparToken();
+      window.dispatchEvent(new CustomEvent("auth:logout"));
+    }
     const error = await res.json().catch(() => ({ detail: res.statusText }));
     throw new Error(typeof error.detail === "string" ? error.detail : "Erro na requisição");
   }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { SettingsComponent } from "@iagokcruz/componentes-kit";
 
 interface Props {
@@ -10,7 +10,7 @@ export function LoginPage({ aoLogar, carregando }: Props) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     await aoLogar(email, senha);
   }

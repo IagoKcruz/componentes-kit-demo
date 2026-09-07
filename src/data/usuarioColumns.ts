@@ -11,6 +11,5 @@ export const usuarioColumns: Coluna<Usuario>[] = [
   { chave: "nome", cabecalho: "Nome" },
   { chave: "email", cabecalho: "E-mail" },
   { chave: "cpf", cabecalho: "CPF", editor: { tipo: "mascara", mascara: "999.999.999-99" } },
-  { chave: "senha", cabecalho: "Senha" },
   { chave: "tipo", cabecalho: "Tipo", editor: { tipo: "combobox", opcoes: TIPO_OPTIONS } },
 ];

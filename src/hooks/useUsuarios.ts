@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { ToastType, mostrarNotificacao } from "@iagokcruz/componentes-kit";
 import { usuarioService } from "../services/usuarioService";
-import { mapApiParaUsuario } from "../types/usuario";
-import type { TipoUsuario, Usuario } from "../types/usuario";
+import { mapApiParaUsuario, type TipoUsuario, type Usuario } from "../types/usuario";
 
 export function useUsuarios() {
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);
@@ -39,7 +38,7 @@ export function useUsuarios() {
         email: draft.email,
         cpf: draft.cpf,
         senha: draft.senha,
-        tipos: [draft.tipo as TipoUsuario],
+        tipos: [draft.tipo],
       });
       setUsuarios((atual) => [...atual.filter((u) => u.id !== draft.id), mapApiParaUsuario(criado)]);
       mostrarNotificacao(ToastType.Sucesso, `"${criado.nome}" criado com sucesso.`);
