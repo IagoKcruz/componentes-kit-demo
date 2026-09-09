@@ -1,42 +1,64 @@
-# componentes-kit-demo
+# componentes-kit — demo
 
-Projeto de exemplo que consome o pacote [`@iagokcruz/componentes-kit`](https://www.npmjs.com/package/@iagokcruz/componentes-kit) (publicado no npm) — serve pra ver os componentes funcionando de verdade numa tela antes de usá-los em outro projeto.
+Aplicação de demonstração do design system [`@iagokcruz/componentes-kit`](https://github.com/IagoKcruz/componentes-kit). Exibe componentes reais em contexto de uso e serve como ambiente de validação visual e funcional do kit.
 
-🔗 **Demo no ar:** [componentes-kit-demo.vercel.app](https://componentes-kit-demo.vercel.app/)
+**Deploy:** https://componentes-kit-demo.vercel.app
 
-📖 **Guia completo de uso do kit:** [README2.0.md](./README2.0.md)
+## O que tem aqui
 
-## Como rodar
+- Páginas públicas de exemplo com `DataGrid`, `Menu`, `Layout`, `Footer`, `ThemeProvider` e `ToastContainer`
+- Páginas autenticadas de **Serviços** e **Usuários** com CRUD completo integrado à API
+- Suporte a tema claro/escuro via `SettingsComponent`
+- Banner de alerta quando a API está fora do ar
+
+## Stack
+
+| Camada | Tecnologia |
+|---|---|
+| Framework | React 18 + TypeScript |
+| Build | Vite |
+| Estilos | Tailwind CSS |
+| Testes | Vitest + Testing Library |
+| Deploy | Vercel |
+
+## Variáveis de ambiente
+
+| Variável | Descrição |
+|---|---|
+| `VITE_API_URL` | URL base da API (ex: `https://componentes-kit-demo-api.onrender.com`) |
+
+Crie um `.env` local a partir do `.env.example`:
+
+```bash
+cp .env.example .env
+```
+
+## Rodando localmente
 
 ```bash
 pnpm install
-pnpm run dev
+pnpm dev
 ```
 
-Abre em `http://localhost:5173`.
+Os testes:
 
-## O que a tela mostra
+```bash
+pnpm test
+```
 
-`src/App.tsx` monta uma tela de exemplo usando o `Layout` (com `Menu` lateral colapsável e
-`Footer`) e o `DataGrid`:
-- **Menu**: navegação lateral (Página 1/2/3, nomes genéricos de propósito — é só um exemplo),
-  colapsa pra uma barrinha com o botão de abrir.
-- **Configurações** (ícone de engrenagem, `SettingsComponent`): aparência (claro/escuro/sistema)
-  e paletas de cor prontas ao vivo.
-- Na Página 1: um catálogo com `TextBox`, `NumericInput`, `MaskedInput` e `ComboBox`
-  funcionando, seguido do `DataGrid`.
-- **Incluir**: abre o formulário vazio (popup ou inline, conforme o seletor "Modo de edição" no
-  topo) e só cria o produto ao confirmar.
-- **Editar** / **Excluir** / **Duplicar**: ações por linha na grid.
-- **Rodapé fixo**: alterna entre o rodapé sempre visível (com scroll só no conteúdo) e o rodapé
-  normal (rola junto com a página).
+## Estrutura relevante
 
-## Deploy
+```
+src/
+├── components/   # Ícones e componentes locais
+├── data/         # Definição de colunas do DataGrid
+├── hooks/        # useAuth, useApiStatus, useServicos, useUsuarios
+├── pages/        # Páginas da aplicação
+├── services/     # Clientes HTTP (authService, servicoService, usuarioService)
+├── lib/          # apiClient (fetch + tratamento de erros)
+└── types/        # Tipos TypeScript compartilhados
+```
 
-O projeto está pronto pra deploy estático (Vercel, Netlify etc.) — não usa nenhuma variável de
-ambiente nem link local, é só instalar e buildar (`pnpm build`, saída em `dist/`).
+## API
 
-## Branches
-
-- `master`: o que está publicado/no ar.
-- `Dev`: onde as mudanças acontecem. `master` só é atualizada quando um novo release é decidido.
+Este demo consome a [componentes-kit-demo-api](https://github.com/IagoKcruz/componentes-kit-demo-api). Para rodar localmente sem Render, suba a API localmente e aponte `VITE_API_URL=http://localhost:8000`.
