@@ -33,7 +33,14 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
       window.dispatchEvent(new CustomEvent("auth:logout"));
     }
     const error = await res.json().catch(() => ({ detail: res.statusText }));
-    throw new Error(typeof error.detail === "string" ? error.detail : "Erro na requisição");
+    const { detail } = error;
+    const mensagem =
+      typeof detail === "string"
+        ? detail
+        : Array.isArray(detail)
+          ? detail.map((e: { msg: string }) => e.msg).join("; ")
+          : "Erro na requisição";
+    throw new Error(mensagem);
   }
 
   if (res.status === 204) return undefined as T;

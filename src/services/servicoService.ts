@@ -4,14 +4,14 @@ import type { Servico } from "../types/servico";
 interface CriarServicoPayload {
   nome: string;
   descricao: string;
-  duracao_minutos: number;
+  duracaoMinutos: number;
   preco: number;
 }
 
 interface AtualizarServicoPayload {
   nome?: string;
   descricao?: string;
-  duracao_minutos?: number;
+  duracaoMinutos?: number;
   preco?: number;
 }
 

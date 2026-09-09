@@ -20,7 +20,7 @@ export function useServicos() {
       id: crypto.randomUUID(),
       nome: "",
       descricao: "",
-      duracao_minutos: 30,
+      duracaoMinutos: 30,
       preco: 0,
       ativo: true,
     };
