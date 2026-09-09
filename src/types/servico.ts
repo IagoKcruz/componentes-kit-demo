@@ -2,7 +2,7 @@ export interface Servico {
   id: string;
   nome: string;
   descricao: string;
-  duracao_minutos: number;
+  duracaoMinutos: number;
   preco: number;
   ativo: boolean;
 }
