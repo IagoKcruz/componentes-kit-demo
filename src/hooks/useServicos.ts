@@ -1,19 +1,15 @@
-import { useEffect, useState } from "react";
-import { ToastType, mostrarNotificacao } from "@iagokcruz/componentes-kit";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "../lib/toasty";
 import { servicoService } from "../services/servicoService";
 import type { Servico } from "../types/servico";
 
 export function useServicos() {
-  const [servicos, setServicos] = useState<Servico[]>([]);
-  const [carregando, setCarregando] = useState(true);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    servicoService
-      .listar()
-      .then(setServicos)
-      .catch((err: Error) => mostrarNotificacao(ToastType.Erro, err.message))
-      .finally(() => setCarregando(false));
-  }, []);
+  const { data: servicos = [], isLoading: carregando } = useQuery({
+    queryKey: ["servicos"],
+    queryFn: () => servicoService.listar(),
+  });
 
   function createDraft(): Servico {
     return {
@@ -26,45 +22,52 @@ export function useServicos() {
     };
   }
 
-  async function createServico(draft: Servico) {
-    try {
-      const criado = await servicoService.criar({
+  const criarMutation = useMutation({
+    mutationFn: servicoService.criar,
+    onSuccess: (criado) => {
+      queryClient.invalidateQueries({ queryKey: ["servicos"] });
+      toast.sucesso(`"${criado.nome}" criado com sucesso.`);
+    },
+  });
+
+  const atualizarMutation = useMutation({
+    mutationFn: ({ id, payload }: { id: string; payload: Parameters<typeof servicoService.atualizar>[1] }) =>
+      servicoService.atualizar(id, payload),
+    onSuccess: (atualizado) => {
+      queryClient.invalidateQueries({ queryKey: ["servicos"] });
+      toast.sucesso(`"${atualizado.nome}" atualizado com sucesso.`);
+    },
+  });
+
+  const removerMutation = useMutation({
+    mutationFn: (servico: Servico) => servicoService.remover(servico.id),
+    onSuccess: (_, servico) => {
+      queryClient.invalidateQueries({ queryKey: ["servicos"] });
+      toast.info(`"${servico.nome}" excluído.`);
+    },
+  });
+
+  return {
+    servicos,
+    carregando,
+    createDraft,
+    createServico: (draft: Servico) =>
+      criarMutation.mutate({
         nome: draft.nome,
         descricao: draft.descricao,
-        duracao_minutos: draft.duracao_minutos,
+        duracaoMinutos: draft.duracaoMinutos,
         preco: draft.preco,
-      });
-      setServicos((atual) => [...atual.filter((s) => s.id !== draft.id), criado]);
-      mostrarNotificacao(ToastType.Sucesso, `"${criado.nome}" criado com sucesso.`);
-    } catch (err) {
-      mostrarNotificacao(ToastType.Erro, (err as Error).message);
-    }
-  }
-
-  async function saveServico(editado: Servico) {
-    try {
-      const atualizado = await servicoService.atualizar(editado.id, {
-        nome: editado.nome,
-        descricao: editado.descricao,
-        duracao_minutos: editado.duracao_minutos,
-        preco: editado.preco,
-      });
-      setServicos((atual) => atual.map((s) => (s.id === atualizado.id ? atualizado : s)));
-      mostrarNotificacao(ToastType.Sucesso, `"${atualizado.nome}" atualizado com sucesso.`);
-    } catch (err) {
-      mostrarNotificacao(ToastType.Erro, (err as Error).message);
-    }
-  }
-
-  async function removeServico(servico: Servico) {
-    try {
-      await servicoService.remover(servico.id);
-      setServicos((atual) => atual.filter((s) => s.id !== servico.id));
-      mostrarNotificacao(ToastType.Informacao, `"${servico.nome}" excluído.`);
-    } catch (err) {
-      mostrarNotificacao(ToastType.Erro, (err as Error).message);
-    }
-  }
-
-  return { servicos, carregando, createDraft, createServico, saveServico, removeServico };
+      }),
+    saveServico: (editado: Servico) =>
+      atualizarMutation.mutate({
+        id: editado.id,
+        payload: {
+          nome: editado.nome,
+          descricao: editado.descricao,
+          duracaoMinutos: editado.duracaoMinutos,
+          preco: editado.preco,
+        },
+      }),
+    removeServico: (servico: Servico) => removerMutation.mutate(servico),
+  };
 }
