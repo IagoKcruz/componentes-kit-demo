@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import { ToastType, mostrarNotificacao } from "@iagokcruz/componentes-kit";
+import { useMutation } from "@tanstack/react-query";
 import { authService } from "../services/authService";
 import { limparToken } from "../lib/apiClient";
 
 export function useAuth() {
   const [autenticado, setAutenticado] = useState(() => !!localStorage.getItem("access_token"));
-  const [carregando, setCarregando] = useState(false);
 
   useEffect(() => {
     function handleLogout() {
@@ -15,22 +14,21 @@ export function useAuth() {
     return () => window.removeEventListener("auth:logout", handleLogout);
   }, []);
 
-  async function login(email: string, senha: string) {
-    setCarregando(true);
-    try {
-      await authService.login({ email, senha });
-      setAutenticado(true);
-    } catch (err) {
-      mostrarNotificacao(ToastType.Erro, (err as Error).message);
-    } finally {
-      setCarregando(false);
-    }
-  }
+  const loginMutation = useMutation({
+    mutationFn: ({ email, senha }: { email: string; senha: string }) =>
+      authService.login({ email, senha }),
+    onSuccess: () => setAutenticado(true),
+  });
 
   function logout() {
     limparToken();
     setAutenticado(false);
   }
 
-  return { autenticado, carregando, login, logout };
+  return {
+    autenticado,
+    carregando: loginMutation.isPending,
+    login: (email: string, senha: string) => loginMutation.mutate({ email, senha }),
+    logout,
+  };
 }

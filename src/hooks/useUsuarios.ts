@@ -1,19 +1,18 @@
-import { useEffect, useState } from "react";
-import { ToastType, mostrarNotificacao } from "@iagokcruz/componentes-kit";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "../lib/toasty";
 import { usuarioService } from "../services/usuarioService";
-import { mapApiParaUsuario, type TipoUsuario, type Usuario } from "../types/usuario";
+import { mapApiParaUsuario, type Usuario } from "../types/usuario";
 
 export function useUsuarios() {
-  const [usuarios, setUsuarios] = useState<Usuario[]>([]);
-  const [carregando, setCarregando] = useState(true);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    usuarioService
-      .listar()
-      .then((lista) => setUsuarios(lista.map(mapApiParaUsuario)))
-      .catch((err: Error) => mostrarNotificacao(ToastType.Erro, err.message))
-      .finally(() => setCarregando(false));
-  }, []);
+  const { data: usuarios = [], isLoading: carregando } = useQuery({
+    queryKey: ["usuarios"],
+    queryFn: async () => {
+      const lista = await usuarioService.listar();
+      return lista.map(mapApiParaUsuario);
+    },
+  });
 
   function createDraft(): Usuario {
     return {
@@ -27,25 +26,27 @@ export function useUsuarios() {
     };
   }
 
-  async function createUsuario(draft: Usuario) {
-    if (!draft.senha) {
-      mostrarNotificacao(ToastType.Erro, "Senha é obrigatória.");
-      return;
-    }
-    try {
-      const criado = await usuarioService.criar({
+  const criarMutation = useMutation({
+    mutationFn: (draft: Usuario) => {
+      if (!draft.senha) throw new Error("Senha é obrigatória.");
+      return usuarioService.criar({
         nome: draft.nome,
         email: draft.email,
         cpf: draft.cpf,
         senha: draft.senha,
         tipos: [draft.tipo],
       });
-      setUsuarios((atual) => [...atual.filter((u) => u.id !== draft.id), mapApiParaUsuario(criado)]);
-      mostrarNotificacao(ToastType.Sucesso, `"${criado.nome}" criado com sucesso.`);
-    } catch (err) {
-      mostrarNotificacao(ToastType.Erro, (err as Error).message);
-    }
-  }
+    },
+    onSuccess: (criado) => {
+      queryClient.invalidateQueries({ queryKey: ["usuarios"] });
+      toast.sucesso(`"${criado.nome}" criado com sucesso.`);
+    },
+  });
 
-  return { usuarios, carregando, createDraft, createUsuario };
+  return {
+    usuarios,
+    carregando,
+    createDraft,
+    createUsuario: (draft: Usuario) => criarMutation.mutate(draft),
+  };
 }
