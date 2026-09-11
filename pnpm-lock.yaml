@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@iagokcruz/componentes-kit':
-        specifier: ^1.2.0
-        version: 1.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: file:../componentes-kit
+        version: file:../componentes-kit(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tanstack/react-query':
         specifier: ^5.102.8
         version: 5.102.8(react@18.3.1)
@@ -362,8 +362,8 @@ packages:
       '@noble/hashes':
         optional: true
 
-  '@iagokcruz/componentes-kit@1.2.0':
-    resolution: {integrity: sha512-nyspkD5LAEwGl5BsU4CijuvyI7VfawIM0DFF54y92P3SsfUREhXAEiqCDubER/tdgWdezMjz/AoEBETz1u6vvA==}
+  '@iagokcruz/componentes-kit@file:../componentes-kit':
+    resolution: {directory: ../componentes-kit, type: directory}
     peerDependencies:
       react: ^18.3.1
       react-dom: ^18.3.1
@@ -1774,7 +1774,7 @@ snapshots:
 
   '@exodus/bytes@1.15.1': {}
 
-  '@iagokcruz/componentes-kit@1.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@iagokcruz/componentes-kit@file:../componentes-kit(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)

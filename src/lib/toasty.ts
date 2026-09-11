@@ -6,7 +6,7 @@ export function exibirToast(obj: ToastyObject): void {
     obj.mensagem ??
     obj.listaMensagem?.join(" | ") ??
     obj.erro ??
-    obj.listaErro?.join("; ") ??
+    (obj.listaErro?.length ? "• " + obj.listaErro.join("\n• ") : undefined) ??
     "Operação realizada";
   mostrarNotificacao(obj.tipo, texto);
 }
